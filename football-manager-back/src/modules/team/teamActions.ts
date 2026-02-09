@@ -1,16 +1,16 @@
 import type { RequestHandler } from "express";
 
 // Import access to data
-import itemRepository from "./itemRepository";
+import teamRepository from "./teamRepository";
 
 // The B of BREAD - Browse (Read All) operation
 const browse: RequestHandler = async (req, res, next) => {
   try {
-    // Fetch all items
-    const items = await itemRepository.readAll();
+    // Fetch all teams
+    const team = await teamRepository.readAll();
 
-    // Respond with the items in JSON format
-    res.json(items);
+    // Respond with the teams in JSON format
+    res.json(team);
   } catch (err) {
     // Pass any errors to the error-handling middleware
     next(err);
@@ -20,16 +20,16 @@ const browse: RequestHandler = async (req, res, next) => {
 // The R of BREAD - Read operation
 const read: RequestHandler = async (req, res, next) => {
   try {
-    // Fetch a specific item based on the provided ID
-    const itemId = Number(req.params.id);
-    const item = await itemRepository.read(itemId);
+    // Fetch a specific team based on the provided ID
+    const teamId = Number(req.params.id);
+    const team = await teamRepository.read(teamId);
 
     // If the item is not found, respond with HTTP 404 (Not Found)
     // Otherwise, respond with the item in JSON format
-    if (item == null) {
+    if (team == null) {
       res.sendStatus(404);
     } else {
-      res.json(item);
+      res.json(team);
     }
   } catch (err) {
     // Pass any errors to the error-handling middleware
@@ -41,13 +41,18 @@ const read: RequestHandler = async (req, res, next) => {
 const add: RequestHandler = async (req, res, next) => {
   try {
     // Extract the item data from the request body
-    const newItem = {
-      title: req.body.title,
+    const newteam = {
+      name: req.body.name, // On remplace .title par .name
+      established: req.body.established, // Ajouté
+      country: req.body.country, // Ajouté
+      city: req.body.city, // Ajouté
+      stadium: req.body.stadium, // Ajouté
+      trophys: req.body.trophys, // Ajouté
       user_id: req.body.user_id,
     };
 
     // Create the item
-    const insertId = await itemRepository.create(newItem);
+    const insertId = await teamRepository.create(newteam);
 
     // Respond with HTTP 201 (Created) and the ID of the newly inserted item
     res.status(201).json({ insertId });

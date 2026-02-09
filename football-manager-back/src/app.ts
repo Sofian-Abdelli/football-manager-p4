@@ -52,7 +52,7 @@ app.use(
 
 // Uncomment one or more of these options depending on the format of the data sent by your client:
 
-// app.use(express.json());
+app.use(express.json());
 // app.use(express.urlencoded());
 // app.use(express.text());
 // app.use(express.raw());
@@ -80,7 +80,7 @@ import path from "node:path";
 
 // Serve server resources
 
-const publicFolderPath = path.join(__dirname, "../../server/public");
+const publicFolderPath = path.join(__dirname, "../../public");
 
 if (fs.existsSync(publicFolderPath)) {
   app.use(express.static(publicFolderPath));
@@ -88,7 +88,10 @@ if (fs.existsSync(publicFolderPath)) {
 
 // Serve client resources
 
-const clientBuildPath = path.join(__dirname, "../../client/dist");
+const clientBuildPath = path.join(
+  __dirname,
+  "../../../football-manager-front/dist",
+);
 
 if (fs.existsSync(clientBuildPath)) {
   app.use(express.static(clientBuildPath));

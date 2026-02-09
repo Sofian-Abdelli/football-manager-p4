@@ -2,20 +2,33 @@ import databaseClient from "../../../database/client";
 
 import type { Result, Rows } from "../../../database/client";
 
-type Item = {
+type Team = {
   id: number;
-  title: string;
+  name: string;
+  established: number;
+  country: string;
+  city: string;
+  stadium: string;
+  trophys: number;
   user_id: number;
 };
 
-class ItemRepository {
+class TeamRepository {
   // The C of CRUD - Create operation
 
-  async create(item: Omit<Item, "id">) {
+  async create(team: Omit<Team, "id">) {
     // Execute the SQL INSERT query to add a new item to the "item" table
     const [result] = await databaseClient.query<Result>(
-      "insert into item (title, user_id) values (?, ?)",
-      [item.title, item.user_id],
+      "insert into team (name, established, country, city, stadium, trophys, user_id) values (?, ?, ?, ?, ?, ?, ?)",
+      [
+        team.name,
+        team.established,
+        team.country,
+        team.city,
+        team.stadium,
+        team.trophys,
+        team.user_id,
+      ],
     );
 
     // Return the ID of the newly inserted item
@@ -27,20 +40,22 @@ class ItemRepository {
   async read(id: number) {
     // Execute the SQL SELECT query to retrieve a specific item by its ID
     const [rows] = await databaseClient.query<Rows>(
-      "select * from item where id = ?",
+      "select * from team where id = ?",
       [id],
     );
 
     // Return the first row of the result, which represents the item
-    return rows[0] as Item;
+    return rows[0] as Team;
   }
 
   async readAll() {
     // Execute the SQL SELECT query to retrieve all items from the "item" table
-    const [rows] = await databaseClient.query<Rows>("select * from item");
+    const [rows] = await databaseClient.query<Rows>(
+      "SELECT id, name, established, country, city, stadium, trophys, user_id FROM team",
+    );
 
     // Return the array of items
-    return rows as Item[];
+    return rows as Team[];
   }
 
   // The U of CRUD - Update operation
@@ -58,4 +73,4 @@ class ItemRepository {
   // }
 }
 
-export default new ItemRepository();
+export default new TeamRepository();

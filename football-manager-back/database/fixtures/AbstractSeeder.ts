@@ -81,4 +81,7 @@ abstract class AbstractSeeder implements SeederOptions {
 // Ready to export
 export default AbstractSeeder;
 
-export type { AbstractSeeder };
+// ... (tout le reste du code est bon)
+
+// On exporte simplement la classe par défaut
+export { AbstractSeeder };
