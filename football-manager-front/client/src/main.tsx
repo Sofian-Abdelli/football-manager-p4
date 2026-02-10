@@ -7,6 +7,8 @@ import { RouterProvider, createBrowserRouter } from "react-router";
 
 // Import the main app component
 import App from "./App";
+import Home from "./pages/Home";
+import Teams from "./pages/Teams";
 
 // Import additional components for new routes
 // Try creating these components in the "pages" folder
@@ -20,10 +22,29 @@ import App from "./App";
 // You can add more routes as you build out your app!
 const router = createBrowserRouter([
   {
-    path: "/", // The root path
-    element: <App />, // Renders the App component for the home page
+    path: "/",
+    element: <App />, // C'est ton "Layout" avec le cadre néon
+    children: [
+      {
+        path: "/", // URL: / (Accueil)
+        element: <Home />,
+      },
+      {
+        path: "teams", // URL: /teams
+        element: <Teams />,
+      },
+      {
+        path: "players", // URL: /players
+        element: <div className="page-temp">Page Joueurs (Table: player)</div>,
+      },
+      {
+        path: "stadiums", // URL: /stadiums
+        element: (
+          <div className="page-temp">Page Stades (Table: team.stadium)</div>
+        ),
+      },
+    ],
   },
-  // Try adding a new route! For example, "/about" with an About component
 ]);
 
 /* ************************************************************************* */
