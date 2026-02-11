@@ -8,6 +8,7 @@ import { RouterProvider, createBrowserRouter } from "react-router";
 // Import the main app component
 import App from "./App";
 import Home from "./pages/Home";
+import Stadiums from "./pages/Stadiums";
 import Teams from "./pages/Teams";
 
 // Import additional components for new routes
@@ -39,9 +40,7 @@ const router = createBrowserRouter([
       },
       {
         path: "stadiums", // URL: /stadiums
-        element: (
-          <div className="page-temp">Page Stades (Table: team.stadium)</div>
-        ),
+        element: <Stadiums />, // REMPLACE LE TEXTE PAR CELA
       },
     ],
   },

@@ -37,6 +37,36 @@ const read: RequestHandler = async (req, res, next) => {
   }
 };
 
+// The E of BREAD - Edit (Update) operation
+const edit: RequestHandler = async (req, res, next) => {
+  try {
+    // On extrait l'ID de l'URL et les données du corps de la requête
+    const id = Number(req.params.id);
+    const updatedTeam = {
+      id: id,
+      name: req.body.name,
+      established: req.body.established,
+      country: req.body.country,
+      city: req.body.city,
+      stadium: req.body.stadium,
+      trophys: req.body.trophys,
+      user_id: req.body.user_id,
+    };
+
+    // On appelle la méthode update du repository
+    const affectedRows = await teamRepository.update(updatedTeam);
+
+    // Si aucune ligne n'est touchée (affectedRows === 0), l'ID n'existait pas
+    if (affectedRows === 0) {
+      res.sendStatus(404);
+    } else {
+      res.sendStatus(204); // 204 = Succès, mais rien à renvoyer dans le corps
+    }
+  } catch (err) {
+    next(err);
+  }
+};
+
 // The A of BREAD - Add (Create) operation
 const add: RequestHandler = async (req, res, next) => {
   try {
@@ -50,6 +80,7 @@ const add: RequestHandler = async (req, res, next) => {
       trophys: req.body.trophys, // Ajouté
       user_id: req.body.user_id,
     };
+    console.log(newteam);
 
     // Create the item
     const insertId = await teamRepository.create(newteam);
@@ -62,4 +93,22 @@ const add: RequestHandler = async (req, res, next) => {
   }
 };
 
-export default { browse, read, add };
+// The D of BREAD - Delete (Destroy) operation
+const destroy: RequestHandler = async (req, res, next) => {
+  try {
+    const id = Number(req.params.id);
+
+    // On appelle la méthode delete du repository
+    const affectedRows = await teamRepository.delete(id);
+
+    if (affectedRows === 0) {
+      res.sendStatus(404);
+    } else {
+      res.sendStatus(204);
+    }
+  } catch (err) {
+    next(err);
+  }
+};
+
+export default { browse, read, edit, add, delete: destroy };
