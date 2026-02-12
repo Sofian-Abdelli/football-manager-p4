@@ -1,0 +1,83 @@
+.home-screen {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: space-between; /* Espace entre le titre, le menu et le footer */
+  height: 80vh; /* Prend la hauteur disponible */
+  width: 100%;
+}
+
+.home-header {
+  text-align: center;
+  margin-top: 40px;
+}
+
+.home-header h1 {
+  font-size: 3.5rem;
+  font-style: italic;
+  font-weight: 900;
+  margin: 0;
+  letter-spacing: 4px;
+}
+
+.subtitle {
+  color: var(--accent-blue);
+  letter-spacing: 5px;
+  font-size: 0.9rem;
+}
+
+/* LA BOÎTE CENTRALE */
+.main-menu-container {
+  background: rgba(15, 23, 42, 0.6); /* Effet vitré sombre */
+  backdrop-filter: blur(10px);
+  padding: 40px;
+  border-radius: 20px;
+  border: 1px solid rgba(56, 189, 248, 0.3);
+  width: 100%;
+  max-width: 500px;
+  text-align: center;
+  box-shadow: 0 0 40px rgba(0, 0, 0, 0.5);
+}
+
+.menu-title {
+  font-size: 1rem;
+  color: var(--accent-blue);
+  margin-bottom: 30px;
+  letter-spacing: 3px;
+}
+
+.home-navigation {
+  display: grid;
+  grid-template-columns: 1fr 1fr; /* 2 colonnes pour faire un beau carré */
+  gap: 15px;
+}
+
+.nav-button {
+  text-decoration: none;
+  color: white;
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  padding: 15px;
+  border-radius: 8px;
+  font-weight: 700;
+  transition: all 0.3s ease;
+}
+
+.nav-button:hover {
+  background: rgba(56, 189, 248, 0.1);
+  border-color: var(--accent-blue);
+  transform: scale(1.05);
+}
+
+.nav-button.active {
+  background: var(--accent-blue);
+  color: #020617;
+  border: none;
+  box-shadow: 0 0 15px var(--accent-glow);
+}
+
+.home-footer {
+  font-size: 0.7rem;
+  color: var(--text-muted);
+  margin-bottom: 20px;
+  letter-spacing: 4px;
+}

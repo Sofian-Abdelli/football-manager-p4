@@ -1,87 +1,33 @@
-// Import necessary modules from React and React Router
 import { StrictMode } from "react";
 import { createRoot } from "react-dom/client";
-import { RouterProvider, createBrowserRouter } from "react-router";
+import { RouterProvider, createBrowserRouter } from "react-router-dom";
 
-/* ************************************************************************* */
-
-// Import the main app component
+// On importe nos pages
 import App from "./App";
+import Create from "./pages/Create";
 import Home from "./pages/Home";
+import Players from "./pages/Players";
 import Stadiums from "./pages/Stadiums";
 import Teams from "./pages/Teams";
 
-// Import additional components for new routes
-// Try creating these components in the "pages" folder
-
-// import About from "./pages/About";
-// import Contact from "./pages/Contact";
-
-/* ************************************************************************* */
-
-// Create router configuration with routes
-// You can add more routes as you build out your app!
 const router = createBrowserRouter([
   {
     path: "/",
-    element: <App />, // C'est ton "Layout" avec le cadre néon
+    element: <App />, // Le squelette (Header/Footer)
     children: [
-      {
-        path: "/", // URL: / (Accueil)
-        element: <Home />,
-      },
-      {
-        path: "teams", // URL: /teams
-        element: <Teams />,
-      },
-      {
-        path: "players", // URL: /players
-        element: <div className="page-temp">Page Joueurs (Table: player)</div>,
-      },
-      {
-        path: "stadiums", // URL: /stadiums
-        element: <Stadiums />, // REMPLACE LE TEXTE PAR CELA
-      },
+      { path: "/", element: <Home /> },
+      { path: "teams", element: <Teams /> },
+      { path: "players", element: <Players /> },
+      { path: "stadiums", element: <Stadiums /> },
+      { path: "create", element: <Create /> },
     ],
   },
 ]);
 
-/* ************************************************************************* */
-
-// Find the root element in the HTML document
 const rootElement = document.getElementById("root");
-if (rootElement == null) {
-  throw new Error(`Your HTML Document should contain a <div id="root"></div>`);
-}
-
-// Render the app inside the root element
+if (!rootElement) throw new Error("Failed to find the root element");
 createRoot(rootElement).render(
   <StrictMode>
     <RouterProvider router={router} />
   </StrictMode>,
 );
-
-/**
- * Helpful Notes:
- *
- * 1. Adding More Routes:
- *    To add more pages to your app, first create a new component (e.g., About.tsx).
- *    Then, import that component above like this:
- *
- *    import About from "./pages/About";
- *
- *    Add a new route to the router:
- *
- *      {
- *        path: "/about",
- *        element: <About />,  // Renders the About component
- *      }
- *
- * 2. Try Nested Routes:
- *    For more complex applications, you can nest routes. This lets you have sub-pages within a main page.
- *    Documentation: https://reactrouter.com/en/main/start/tutorial#nested-routes
- *
- * 3. Experiment with Dynamic Routes:
- *    You can create routes that take parameters (e.g., /users/:id).
- *    Documentation: https://reactrouter.com/en/main/start/tutorial#url-params-in-loaders
- */
