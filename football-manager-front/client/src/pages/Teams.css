@@ -1,0 +1,104 @@
+/* Container principal */
+.teams-page-container {
+  padding: 40px 20px;
+  max-width: 1200px;
+  margin: 0 auto;
+  min-height: 100vh;
+}
+
+.page-title {
+  font-size: 3rem;
+  color: var(--accent-blue);
+  text-align: center;
+  text-transform: uppercase;
+  letter-spacing: 6px;
+  margin-bottom: 50px;
+  text-shadow: 0 0 15px rgba(56, 189, 248, 0.4);
+}
+
+/* La Grille */
+.teams-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+  gap: 30px;
+  padding: 10px;
+}
+
+/* La Carte d'équipe */
+.team-card {
+  background: rgba(15, 23, 42, 0.8);
+  backdrop-filter: blur(10px);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: 20px;
+  padding: 30px;
+  text-align: center;
+  transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+  position: relative;
+  overflow: hidden;
+}
+
+.team-card:hover {
+  transform: translateY(-10px);
+  border-color: var(--accent-blue);
+  box-shadow: 0 15px 30px rgba(0, 0, 0, 0.5), 0 0 15px rgba(56, 189, 248, 0.2);
+}
+
+/* Logo dans la carte */
+.team-card-logo {
+  width: 100px;
+  height: 100px;
+  object-fit: contain;
+  margin: 0 auto 20px;
+  filter: drop-shadow(0 0 10px rgba(255, 255, 255, 0.1));
+  transition: transform 0.3s ease;
+}
+
+.team-card:hover .team-card-logo {
+  transform: scale(1.1);
+  filter: drop-shadow(0 0 15px var(--accent-blue));
+}
+
+.team-card h3 {
+  font-size: 1.5rem;
+  color: white;
+  margin-bottom: 8px;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+}
+
+.team-card p {
+  color: #94a3b8;
+  font-size: 1rem;
+  margin-bottom: 25px;
+}
+
+/* Bouton Voir le club */
+.btn-details {
+  display: inline-block;
+  background: transparent;
+  border: 1px solid var(--accent-blue);
+  color: var(--accent-blue);
+  padding: 12px 25px;
+  border-radius: 8px;
+  text-decoration: none;
+  font-weight: 800;
+  font-size: 0.9rem;
+  text-transform: uppercase;
+  letter-spacing: 2px;
+  transition: all 0.3s ease;
+}
+
+.btn-details:hover {
+  background: var(--accent-blue);
+  color: #020617;
+  box-shadow: 0 0 20px rgba(56, 189, 248, 0.5);
+}
+
+/* Message si vide */
+.no-teams {
+  color: #94a3b8;
+  text-align: center;
+  grid-column: 1 / -1;
+  font-size: 1.2rem;
+  margin-top: 50px;
+}

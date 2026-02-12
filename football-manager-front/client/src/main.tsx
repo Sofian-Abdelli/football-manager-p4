@@ -8,6 +8,7 @@ import Create from "./pages/Create";
 import Home from "./pages/Home";
 import Players from "./pages/Players";
 import Stadiums from "./pages/Stadiums";
+import TeamDetail from "./pages/TeamDetail"; // Vérifie que le nom du dossier est bien "pages"
 import Teams from "./pages/Teams";
 
 const router = createBrowserRouter([
@@ -15,8 +16,9 @@ const router = createBrowserRouter([
     path: "/",
     element: <App />, // Le squelette (Header/Footer)
     children: [
-      { path: "/", element: <Home /> },
+      { index: true, element: <Home /> },
       { path: "teams", element: <Teams /> },
+      { path: "teams/:id", element: <TeamDetail /> },
       { path: "players", element: <Players /> },
       { path: "stadiums", element: <Stadiums /> },
       { path: "create", element: <Create /> },

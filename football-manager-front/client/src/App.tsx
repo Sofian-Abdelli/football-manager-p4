@@ -7,7 +7,6 @@ function App() {
 
   return (
     <div className="app-layout">
-      {/* CONDITION : On affiche la nav UNIQUEMENT si on n'est PAS sur l'accueil "/" */}
       {location.pathname !== "/" && (
         <nav className="main-nav">
           <NavLink
@@ -16,24 +15,28 @@ function App() {
           >
             Accueil
           </NavLink>
+
           <NavLink
             to="/teams"
             className={({ isActive }) => (isActive ? "active" : "")}
           >
             Teams
           </NavLink>
+
           <NavLink
             to="/players"
             className={({ isActive }) => (isActive ? "active" : "")}
           >
             Players
           </NavLink>
+
           <NavLink
             to="/stadiums"
             className={({ isActive }) => (isActive ? "active" : "")}
           >
             Stadiums
           </NavLink>
+
           <NavLink
             to="/create"
             className={({ isActive }) => (isActive ? "active" : "")}

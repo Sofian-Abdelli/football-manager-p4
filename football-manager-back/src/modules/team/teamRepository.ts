@@ -1,5 +1,6 @@
+// On utilise 'import type' pour RowDataPacket car il n'est utilisé que comme type
+import type { RowDataPacket } from "mysql2";
 import databaseClient from "../../../database/client";
-
 import type { Result, Rows } from "../../../database/client";
 
 type Team = {
@@ -12,13 +13,12 @@ type Team = {
   stadium_name?: string;
   trophys: number;
   user_id: number;
+  logo_url?: string; // Ajoute-le ici si tu veux éviter des erreurs TypeScript
 };
 
 class TeamRepository {
-  // The C of CRUD - Create operation
-
+  // CREATE
   async create(team: Omit<Team, "id">) {
-    // Execute the SQL INSERT query to add a new item to the "item" table
     const [result] = await databaseClient.query<Result>(
       "insert into team (name, established, country, city, stadium_id, trophys, user_id) values (?, ?, ?, ?, ?, ?, ?)",
       [
@@ -31,43 +31,41 @@ class TeamRepository {
         team.user_id,
       ],
     );
-
-    // Return the ID of the newly inserted item
     return result.insertId;
   }
 
-  // The Rs of CRUD - Read operations
-
+  // READ (Détail avec Coach et Stade)
   async read(id: number) {
-    // Execute the SQL SELECT query to retrieve a specific item by its ID
-    const [rows] = await databaseClient.query<Rows>(
-      `SELECT team.*, stadium.name AS stadium_name 
-     FROM team 
-     LEFT JOIN stadium ON team.stadium_id = stadium.id 
-     WHERE team.id = ?`,
+    const [rows] = await databaseClient.query<RowDataPacket[]>(
+      `SELECT 
+        team.*, 
+        stadium.name AS stadium_name,
+        stadium.capacity AS stadium_capacity,
+        coach.firstname AS coach_firstname,
+        coach.lastname AS coach_lastname,
+        coach.biography AS coach_bio,
+        (SELECT COUNT(*) FROM player WHERE player.team_id = team.id) AS player_count
+      FROM team 
+      LEFT JOIN stadium ON team.stadium_id = stadium.id 
+      LEFT JOIN coach ON team.id = coach.team_id 
+      WHERE team.id = ?`,
       [id],
     );
-
-    // Return the first row of the result, which represents the item
-    return rows[0] as Team;
+    return rows[0];
   }
 
+  // READ ALL (Liste complète)
   async readAll() {
-    // Execute the SQL SELECT query to retrieve all items from the "item" table
     const [rows] = await databaseClient.query<Rows>(
       `SELECT team.*, stadium.name AS stadium_name 
-     FROM team 
-     LEFT JOIN stadium ON team.stadium_id = stadium.id`, // On enlève la jointure pour l'instant
+      FROM team 
+      LEFT JOIN stadium ON team.stadium_id = stadium.id`,
     );
-    console.log("Données reçues de MySQL :", rows);
-
-    // Return the array of items
     return rows as Team[];
   }
 
-  // The U of CRUD - Update operation
+  // UPDATE
   async update(team: Team) {
-    // On met à jour toutes les colonnes pour l'ID spécifié
     const [result] = await databaseClient.query<Result>(
       "UPDATE team SET name = ?, city = ?, country = ?, established = ?, trophys = ?, stadium_id = ?, user_id = ? WHERE id = ?",
       [
@@ -78,22 +76,19 @@ class TeamRepository {
         team.trophys,
         team.stadium_id,
         team.user_id,
-        team.id, // L'ID sert à cibler la bonne ligne dans le WHERE
+        team.id,
       ],
     );
-
-    return result.affectedRows; // Retourne 1 si l'équipe a été modifiée, 0 sinon
+    return result.affectedRows;
   }
 
-  // The D of CRUD - Delete operation
+  // DELETE
   async delete(id: number) {
-    // On supprime la ligne qui correspond à l'ID
     const [result] = await databaseClient.query<Result>(
       "DELETE FROM team WHERE id = ?",
       [id],
     );
-
-    return result.affectedRows; // Retourne 1 si l'équipe a été supprimée
+    return result.affectedRows;
   }
 }
 
