@@ -4,6 +4,10 @@ import type { RequestHandler } from "express";
 import teamRepository from "./teamRepository";
 
 // The B of BREAD - Browse (Read All) operation
+const getone = (req, res) => {
+  console.log("poulet");
+};
+
 const browse: RequestHandler = async (req, res, next) => {
   try {
     // Fetch all teams
@@ -22,7 +26,7 @@ const read: RequestHandler = async (req, res, next) => {
   try {
     // Fetch a specific team based on the provided ID
     const teamId = Number(req.params.id);
-    const team = await teamRepository.read(teamId);
+    /*const team = await teamRepository.read(teamId);
 
     // If the item is not found, respond with HTTP 404 (Not Found)
     // Otherwise, respond with the item in JSON format
@@ -30,7 +34,7 @@ const read: RequestHandler = async (req, res, next) => {
       res.sendStatus(404);
     } else {
       res.json(team);
-    }
+    }*/
   } catch (err) {
     // Pass any errors to the error-handling middleware
     next(err);
@@ -111,4 +115,4 @@ const destroy: RequestHandler = async (req, res, next) => {
   }
 };
 
-export default { browse, read, edit, add, delete: destroy };
+export default { browse, read, edit, add, delete: destroy, getone };

@@ -16,7 +16,7 @@ import teamActions from "./modules/team/teamActions";
 
 // --- 1. ÉQUIPES (TEAMS) ---
 router.get("/api/teams", teamActions.browse);
-router.get("/api/teams/:id", teamActions.read);
+router.get("/api/teams/:id", teamActions.getone);
 router.put("/api/teams/:id", teamActions.edit);
 router.post("/api/teams", teamActions.add);
 router.delete("/api/teams/:id", teamActions.delete);
