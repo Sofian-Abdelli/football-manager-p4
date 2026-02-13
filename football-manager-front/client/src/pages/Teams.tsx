@@ -35,7 +35,6 @@ export default function Teams() {
               className="team-card-logo"
             />
             <h3>{team.name}</h3>
-            <p>📍 {team.city}</p>
 
             <Link to={`/teams/${team.id}`} className="btn-details">
               VOIR LE CLUB
