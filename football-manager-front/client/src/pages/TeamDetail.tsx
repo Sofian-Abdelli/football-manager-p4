@@ -5,6 +5,7 @@ import "./Teams.css";
 interface Team {
   id: number;
   name: string;
+  country: string;
   city: string;
   logo_url?: string;
 }
@@ -54,6 +55,7 @@ export default function TeamDetail() {
         />
         <h1 className="page-title">{team.name}</h1>
         <p>📍 Ville : {team.city}</p>
+        <p>country: {team.country}</p>
       </div>
     </div>
   );

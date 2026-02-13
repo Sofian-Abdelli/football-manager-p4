@@ -43,7 +43,6 @@ class TeamRepository {
         stadium.capacity AS stadium_capacity,
         coach.firstname AS coach_firstname,
         coach.lastname AS coach_lastname,
-        coach.biography AS coach_bio,
         (SELECT COUNT(*) FROM player WHERE player.team_id = team.id) AS player_count
       FROM team 
       LEFT JOIN stadium ON team.stadium_id = stadium.id 
